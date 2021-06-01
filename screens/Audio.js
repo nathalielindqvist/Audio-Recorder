@@ -1,80 +1,128 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Component } from "react";
 import { View, Button, Text, StyleSheet } from "react-native";
 import { Audio } from "expo-av";
+import { connect } from "react-redux";
+import store from "./store";
 
-export default function AudioRecorder() {
-  const [recordings, setRecordings] = useState([]);
-  const [recording, setRecording] = useState();
-  const [recordingUri, setRecordingUri] = useState();
-  const [sound, setSound] = useState();
+class AudioRecorder extends Component {
+  //   constructor(props) {
+  //     super(props);
 
-  useEffect(() => {
-    async () => {
-      Audio.requestPermissionsAsync();
-      Audio.setAudioModeAsync({
+  //     this.state = {
+  //       recordingsArray: [],
+  //       recording: {},
+  //       recordingUri: "",
+  //       sound: {},
+  //     };
+
+  //     store.subscribe(() => {
+  //       this.setState({
+  //         recordingsArray: store.getState().recordingsArray,
+  //         recording: store.getState().recording,
+  //         recordingUri: store.getState().recordingUri,
+  //         sound: store.getState().sound,
+  //       });
+  //     });
+  //   }
+  // const [recordings, setRecordings] = useState([]);
+  // const [recording, setRecording] = useState();
+  // const [recordingUri, setRecordingUri] = useState();
+  // const [sound, setSound] = useState();
+
+  //   useEffect(() => {
+  //     async () => {};
+  //   }, []);
+
+  //   async function initRecordning() {
+
+  //   }
+
+  async startRecording() {
+    try {
+      await Audio.requestPermissionsAsync();
+      await Audio.setAudioModeAsync({
         allowsRecordingIOS: true,
         playsInSilentModeIOS: true,
-      })();
-    };
-  }, []);
-
-  async function initRecordning() {
-    const recording = new Audio.Recording();
-    await recording.prepareToRecordAsync(
-      Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY
-    );
-    await recording.startAsync();
-    setRecording(recording);
-  }
-
-  async function startRecording() {
-    try {
-      initRecordning();
+      });
+      const recording = new Audio.Recording();
+      await recording.prepareToRecordAsync(
+        Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY
+      );
+      await recording.startAsync();
+      this.props.setRecording(recording);
     } catch (err) {
       console.error("Failed to start recording", err);
     }
   }
 
-  async function stopRecording() {
-    await recording.stopAndUnloadAsync();
-    setRecordingUri(recording.getURI());
+  async stopRecording(recordingState) {
+    await this.props.recording.stopAndUnloadAsync();
+    const URI = this.props.recording.getURI();
+    this.props.setRecordingUri(URI);
 
-    if (recordings.length == 0) {
-      recordings.push(recording.getURI());
-      setRecordings(recordings);
-    } else {
-      let newState = [...recordings];
-      console.log(newState);
-      newState.push(recording.getURI());
-      console.log("test", newState);
-      setRecordings(newState);
-    }
-    setRecording(undefined);
+    // if (this.props.recordingArray.length == 0) {
+    this.props.setRecordingsArray(URI);
+    //   setRecordings(recordings);
+    // } else {
+    //   let newState = [...recordings];
+    //   console.log(newState);
+    //   newState.push(recording.getURI());
+    //   console.log("test", newState);
+    //   setRecordings(newState);
+    // }
+    this.props.setRecording(undefined);
   }
 
-  async function playSound() {
+  async playSound() {
     const { sound } = await Audio.Sound.createAsync({
-      uri: recordingUri,
+      uri: this.props.recordingUri,
     });
     setSound(sound);
-    await sound.playAsync();
+    await this.props.sound.playAsync();
   }
 
-  async function pauseSound() {
-    await sound.pauseAsync();
+  async pauseSound() {
+    await this.props.sound.pauseAsync();
   }
-
-  return (
-    <View style={styles.container}>
-      <Button
-        title={recording ? "Stop Recording" : "Start Recording"}
-        onPress={recording ? stopRecording : startRecording}
-      />
-      <Button title={"Play Recordning"} onPress={playSound} />
-      <Button title={"Pause Recordning"} onPress={pauseSound} />
-    </View>
-  );
+  render() {
+    return (
+      <View style={styles.container}>
+        <Button
+          title={this.props.recording ? "Start Recording" : "Stop Recording"}
+          onPress={
+            this.props.recording ? this.stopRecording : this.startRecording
+          }
+        />
+        <Button title={"Play Recordning"} onPress={this.playSound} />
+        <Button title={"Pause Recordning"} onPress={this.pauseSound} />
+      </View>
+    );
+  }
 }
+
+function mapStateToProps(state) {
+  console.log(state);
+  return {
+    recordingsArray: state.recordingsArray,
+    recording: state.recording,
+    recordingUri: state.recordingUri,
+    sound: state.sound,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    setRecordingsArray: (array) =>
+      dispatch({ type: "SET_RECORDINGS_ARRAY", payload: array }),
+    setRecording: (recordingState) =>
+      dispatch({ type: "SET_RECORDING", payload: recordingState }),
+    setRecordingUri: (UriString) =>
+      dispatch({ type: "SET_RECORDING_URI", payload: UriString }),
+    setSound: () => dispatch({ type: "SET_SOUND" }),
+  };
+}
+
+export default connect(mapStateToProps)(AudioRecorder);
 
 const styles = StyleSheet.create({
   container: {

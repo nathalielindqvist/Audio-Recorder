@@ -9,30 +9,33 @@ import { StyleSheet, Text, View, Button } from "react-native";
 import HomeScreen from "./screens/Home";
 import ListScreen from "./screens/List";
 import AudioScreen from "./screens/Audio";
+// import AudioRecorder from "./screens/Audio";
 
 const Stack = createStackNavigator();
-export default function App() {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{ title: "Start" }}
-        />
-        <Stack.Screen
-          name="List"
-          component={ListScreen}
-          options={{ title: "List" }}
-        />
-        <Stack.Screen
-          name="Audio"
-          component={AudioScreen}
-          options={{ title: "Audio" }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+export default class App extends Component {
+  render() {
+    return (
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="Home"
+            component={HomeScreen}
+            options={{ title: "Start" }}
+          />
+          <Stack.Screen
+            name="List"
+            component={ListScreen}
+            options={{ title: "List" }}
+          />
+          <Stack.Screen
+            name="Audio"
+            component={AudioScreen}
+            options={{ title: "Audio" }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
