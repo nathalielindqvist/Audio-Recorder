@@ -49,7 +49,8 @@ class AudioRecorder extends Component {
         Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY
       );
       await recording.startAsync();
-      this.props.setRecording(recording);
+      console.log("test");
+      this.props.dispatch().setRecording(recording);
     } catch (err) {
       console.error("Failed to start recording", err);
     }
@@ -88,9 +89,13 @@ class AudioRecorder extends Component {
     return (
       <View style={styles.container}>
         <Button
-          title={this.props.recording ? "Start Recording" : "Stop Recording"}
+          title={
+            this.props.recording.length ? "Stop Recording" : "Start Recording"
+          }
           onPress={
-            this.props.recording ? this.stopRecording : this.startRecording
+            this.props.recording === undefined
+              ? this.stopRecording
+              : this.startRecording
           }
         />
         <Button title={"Play Recordning"} onPress={this.playSound} />
@@ -101,7 +106,6 @@ class AudioRecorder extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log(state);
   return {
     recordingsArray: state.recordingsArray,
     recording: state.recording,
@@ -122,7 +126,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps)(AudioRecorder);
+export default connect(mapStateToProps, mapDispatchToProps)(AudioRecorder);
 
 const styles = StyleSheet.create({
   container: {
