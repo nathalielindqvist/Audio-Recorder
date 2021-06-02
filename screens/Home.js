@@ -13,22 +13,19 @@ export default class Home extends Component {
   }
   render() {
     return (
-      <Provider store={store}>
-        <AudioRecorder />
-      </Provider>
-      //   <View>
-      //     <Text style={styles.firstText}>Welcome!</Text>
-      //     <Text style={styles.buttonText}>Record new audio clips</Text>
-      //     <Button
-      //       title="Go to Audio"
-      //       onPress={() => this.props.navigation.navigate("Audio")}
-      //     />
-      //     <Text style={styles.buttonText}>See your library</Text>
-      //     <Button
-      //       title="Go to List"
-      //       onPress={() => this.props.navigation.navigate("List")}
-      //     />
-      //   </View>
+      <View>
+        <Text style={styles.firstText}>Welcome!</Text>
+        <Text style={styles.buttonText}>Record new audio clips</Text>
+        <Button
+          title="Go to Audio"
+          onPress={() => this.props.navigation.navigate("Audio-wrapper")}
+        />
+        <Text style={styles.buttonText}>See your library</Text>
+        <Button
+          title="Go to List"
+          onPress={() => this.props.navigation.navigate("List")}
+        />
+      </View>
     );
   }
 }
