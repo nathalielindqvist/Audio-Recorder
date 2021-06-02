@@ -7,8 +7,8 @@ import React, { Component } from "react";
 import { StyleSheet, Text, View, Button } from "react-native";
 
 import HomeScreen from "./screens/Home";
-import ListScreen from "./screens/List";
-import AudioScreen from "./screens/Audio";
+import ListScreenWrapper from "./screens/List-wrapper";
+import AudioWrapperScreen from "./screens/Audio-wrapper";
 // import AudioRecorder from "./screens/Audio";
 
 const Stack = createStackNavigator();
@@ -24,12 +24,12 @@ export default class App extends Component {
           />
           <Stack.Screen
             name="List"
-            component={ListScreen}
+            component={ListScreenWrapper}
             options={{ title: "List" }}
           />
           <Stack.Screen
-            name="Audio"
-            component={AudioScreen}
+            name="Audio-wrapper"
+            component={AudioWrapperScreen}
             options={{ title: "Audio" }}
           />
         </Stack.Navigator>
