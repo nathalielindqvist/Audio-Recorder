@@ -179,8 +179,14 @@ class AudioRecorder extends Component {
     await this.props.recording.stopAndUnloadAsync();
     const URI = this.props.recording.getURI();
     this.props.setRecordingUri(URI);
-    this.props.setRecordingsArray(URI);
-    console.log(this.props.recordingsArray);
+    // for (var i, i = 0; i++; ) {
+    //   var name;
+    //   return (name = file + i);
+    // }
+    const fileName = "Recording " + this.props.recordingsArray.length;
+    const object = { title: fileName, URI: URI };
+    this.props.setRecordingsArray(object);
+    // console.log(this.props.recordingsArray);
     this.props.setRecording(undefined);
   }
 
@@ -203,10 +209,7 @@ class AudioRecorder extends Component {
     return (
       <View style={styles.container}>
         {/* I simplified this part to make it work, inline conditional function calls can be tricky, be careful when you'll update it (it was working properly in the other branch) */}
-        <Button
-          title="Go to Library"
-          onPress={() => this.props.navigation.navigate("List")}
-        />
+
         <Button title={"Start Recordning"} onPress={this.startRecording} />
         <Button title={"Stop Recordning"} onPress={this.stopRecording} />
         <Button title={"Play Recordning"} onPress={this.playSound} />
