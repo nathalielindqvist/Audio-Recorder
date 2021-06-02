@@ -7,7 +7,7 @@ import React, { Component } from "react";
 import { StyleSheet, Text, View, Button } from "react-native";
 
 import HomeScreen from "./screens/Home";
-import ListScreenWrapper from "./screens/List-wrapper";
+import ListScreen from "./screens/List";
 import AudioWrapperScreen from "./screens/Audio-wrapper";
 // import AudioRecorder from "./screens/Audio";
 
@@ -24,7 +24,7 @@ export default class App extends Component {
           />
           <Stack.Screen
             name="List"
-            component={ListScreenWrapper}
+            component={ListScreen}
             options={{ title: "List" }}
           />
           <Stack.Screen
