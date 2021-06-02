@@ -203,6 +203,10 @@ class AudioRecorder extends Component {
     return (
       <View style={styles.container}>
         {/* I simplified this part to make it work, inline conditional function calls can be tricky, be careful when you'll update it (it was working properly in the other branch) */}
+        <Button
+          title="Go to Library"
+          onPress={() => this.props.navigation.navigate("List")}
+        />
         <Button title={"Start Recordning"} onPress={this.startRecording} />
         <Button title={"Stop Recordning"} onPress={this.stopRecording} />
         <Button title={"Play Recordning"} onPress={this.playSound} />
