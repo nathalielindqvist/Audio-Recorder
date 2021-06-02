@@ -1,19 +1,37 @@
 import React, { Component } from "react";
-import { View, Button, Text, Stylesheet, FlatList } from "react-native";
+import {
+  View,
+  Button,
+  Text,
+  Stylesheet,
+  FlatList,
+  TouchableHighlight,
+} from "react-native";
 import store from "./store";
 import { connect } from "react-redux";
 
 // store.subscribe(() => {
 //   const state = store.getState().recordingsArray;
-//   console.log(state);
+console.log(this.state.recordingsArray.map((item) => item.title));
 // });
 
+const data = [
+  {
+    id: 1,
+    name: "Karl",
+  },
+  {
+    id: 2,
+    name: "Ellie",
+  },
+  {
+    id: 3,
+    name: "Son",
+  },
+];
+
 const ItemView = () => {
-  return (
-    <ListItem bottomDivider>
-      <Text>{title}</Text>
-    </ListItem>
-  );
+  return <Text>{data.name}</Text>;
 };
 
 class List extends Component {
@@ -36,18 +54,41 @@ class List extends Component {
     return (
       <View>
         <Text>Hej</Text>
-        <FlatList>
-          data={this.props.recordingsArray}
+        {/* <FlatList
+          data={data}
           keyExtractor={(item, index) => index.toString()}
           renderItem={ItemView}
-        </FlatList>
+        /> */}
+        <FlatList
+          ItemSeparatorComponent={
+            Platform.OS !== "android" &&
+            (({ highlighted }) => (
+              <View
+                style={[style.separator, highlighted && { marginLeft: 0 }]}
+              />
+            ))
+          }
+          data={[{ data }]}
+          renderItem={({ item, index, separators }) => (
+            <TouchableHighlight
+              keyExtractor={(item, index) => index.toString()}
+              onPress={() => this._onPress(item)}
+              onShowUnderlay={separators.highlight}
+              onHideUnderlay={separators.unhighlight}
+            >
+              <View style={{ backgroundColor: "white" }}>
+                <Text>{item.name}</Text>
+              </View>
+            </TouchableHighlight>
+          )}
+        />
       </View>
     );
   }
 }
 
 function mapStateToProps(state) {
-  console.log(state.recordingsArray);
+  //   console.log(state.recordingsArray.map((item) => item.title));
   return {
     recordingsArray: state.recordingsArray,
   };
