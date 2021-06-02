@@ -41,7 +41,10 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case "SET_RECORDINGS_ARRAY":
       // I didn't update this part of code, the `.array` part is not needed I guess.
-      return { recordingsArray: recordingsArray.push(action.payload.array) };
+      return {
+        ...state,
+        recordingsArray: state.recordingsArray.push(action.payload),
+      };
     case "SET_RECORDING":
       // Added `...state` to return whole state in each mutation
       // (doesn't affect functionality in this case, but better practice).

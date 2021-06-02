@@ -180,7 +180,7 @@ class AudioRecorder extends Component {
     const URI = this.props.recording.getURI();
     this.props.setRecordingUri(URI);
     this.props.setRecordingsArray(URI);
-    console.log(this.props.recordingUri);
+    console.log(this.props.recordingsArray);
     this.props.setRecording(undefined);
   }
 
