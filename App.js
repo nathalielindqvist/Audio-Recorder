@@ -7,7 +7,7 @@ import { StyleSheet } from "react-native";
 
 import HomeScreen from "./screens/Home";
 import ListScreen from "./screens/List";
-import Audio from "./screens/Audio";
+import AudioScreen from "./screens/Audio";
 import store from "./store";
 import { Provider } from "react-redux";
 
@@ -30,7 +30,7 @@ export default class App extends Component {
             />
             <Stack.Screen
               name="Audio"
-              component={Audio}
+              component={AudioScreen}
               options={{ title: "Audio recorder" }}
             />
           </Stack.Navigator>
