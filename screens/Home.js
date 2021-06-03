@@ -1,11 +1,5 @@
 import React, { Component } from "react";
-import { render } from "react-dom";
 import { View, Button, Text, StyleSheet } from "react-native";
-import { BorderlessButton } from "react-native-gesture-handler";
-
-import AudioRecorder from "./Audio";
-import store from "./store";
-import { Provider } from "react-redux";
 
 export default class Home extends Component {
   constructor(props) {
@@ -18,7 +12,7 @@ export default class Home extends Component {
         <Text style={styles.buttonText}>Record new audio clips</Text>
         <Button
           title="Go to Audio"
-          onPress={() => this.props.navigation.navigate("Audio-wrapper")}
+          onPress={() => this.props.navigation.navigate("Audio")}
         />
         <Text style={styles.buttonText}>See your library</Text>
         <Button
