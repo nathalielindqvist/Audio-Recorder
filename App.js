@@ -26,12 +26,12 @@ export default class App extends Component {
             <Stack.Screen
               name="List"
               component={ListScreen}
-              options={{ title: "List" }}
+              options={{ title: "Library" }}
             />
             <Stack.Screen
               name="Audio"
               component={Audio}
-              options={{ title: "Audio" }}
+              options={{ title: "Audio recorder" }}
             />
           </Stack.Navigator>
         </NavigationContainer>

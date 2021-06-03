@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { View, Text, FlatList, TouchableHighlight } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
 import { Audio } from "expo-av";
 import { connect } from "react-redux";
 
@@ -21,12 +27,12 @@ class List extends Component {
     };
     return (
       <View>
-        <Text>Hej</Text>
+        <Text style={styles.firstText}>Your recordings</Text>
         <FlatList
           data={data}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item, index, separators }) => (
-            <TouchableHighlight
+            <TouchableOpacity
               keyExtractor={(item, index) => index.toString()}
               onPress={() => {
                 this.playSound(item);
@@ -34,14 +40,10 @@ class List extends Component {
               onShowUnderlay={separators.highlight}
               onHideUnderlay={separators.unhighlight}
             >
-              <View
-                style={{ backgroundColor: "white", marginTop: 15, height: 50 }}
-              >
-                <Text style={{ paddingLeft: 20, lineHeight: 50 }}>
-                  {item.title}
-                </Text>
+              <View style={styles.listItem}>
+                <Text style={styles.listItemText}>{item.title}</Text>
               </View>
-            </TouchableHighlight>
+            </TouchableOpacity>
           )}
         />
       </View>
@@ -59,3 +61,29 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(List);
+
+const styles = StyleSheet.create({
+  firstText: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginLeft: 10,
+    marginTop: 20,
+  },
+  listItem: {
+    backgroundColor: "#0292f9",
+    marginTop: 15,
+    height: 50,
+  },
+  listItemText: {
+    paddingLeft: 20,
+    lineHeight: 50,
+    fontSize: 16,
+    color: "white",
+  },
+  buttonText: {
+    marginBottom: 10,
+    marginTop: 40,
+    padding: 5,
+    fontSize: 14,
+  },
+});

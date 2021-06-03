@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Button, StyleSheet } from "react-native";
+import { View, Text, Button, StyleSheet } from "react-native";
 import { Audio } from "expo-av";
 import { connect } from "react-redux";
 
@@ -53,8 +53,15 @@ class AudioRecorder extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <Text style={styles.buttonText}>
+          Press here to start your recording
+        </Text>
         <Button title={"Start Recordning"} onPress={this.startRecording} />
+        <Text style={styles.buttonText}>Press here to stop your recording</Text>
         <Button title={"Stop Recordning"} onPress={this.stopRecording} />
+        <Text style={styles.buttonText}>
+          Press here to play back your recording
+        </Text>
         <Button title={"Play Recordning"} onPress={this.playSound} />
       </View>
     );
@@ -87,6 +94,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(AudioRecorder);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 100,
+  },
+  buttonText: {
+    marginTop: 80,
+    marginBottom: 10,
+    marginLeft: 10,
+    fontSize: 16,
   },
 });
